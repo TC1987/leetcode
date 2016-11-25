@@ -1,0 +1,2 @@
+# leetcode
+Because better programmer.
