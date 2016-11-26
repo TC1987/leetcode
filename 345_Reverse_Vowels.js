@@ -43,12 +43,14 @@ var reverseVowels = function(s) {
 
     while (left < right) {
         // Finds the next vowel starting from the left of the string.
+        // Need left < right or else vowels will be reversed again back into their original positions.
         while (!vowels[wordArr[left]] && left < right) {
             left++;
         }
 
         // Finds the next vowel starting from the right of the string.
-        while (!vowels[wordArr[right]] && right > left) {
+        // Need left < right or else vowels will be reversed again back into their original positions.
+        while (!vowels[wordArr[right]] && left < right) {
             right--;
         }
 
