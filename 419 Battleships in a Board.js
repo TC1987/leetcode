@@ -3,46 +3,54 @@
  * @return {number}
  */
 
-// var createGrid = function(board) {
-// 	var main = [],
-// 		inner;
+// No extra storage and it goes through the board only once. Yay!
+// Key point here is if a value is 'X', only need to use findShip to check if the value to the right or below is an X.
+// In main function (countBattleships), if i - 1 or j - 1 is greater than 0, check if value at those positions are an X. Skip if so.
+var createGrid = function(board) {
+	var main = [],
+		inner;
 
-// 	for (var i = 0; i < board.length; i++) {
-// 		inner = [];
-// 		for (var j = 0; j < board[i].length; j++) {
-// 			inner.push(board[i][j]);
-// 		}
-// 		main.push(inner);
-// 	}
+	for (var i = 0; i < board.length; i++) {
+		inner = [];
+		for (var j = 0; j < board[i].length; j++) {
+			inner.push(board[i][j]);
+		}
+		main.push(inner);
+	}
 
-// 	return main;
-// }
+	return main;
+}
 
-// var findShip = function(i, j, board) {
-// 	if (i + 1 < board.length && board[i + 1][j] === 'X') {
-// 		findShip(i + 1, j, board);
-// 	}
+var findShip = function(i, j, board) {
+	if (i + 1 < board.length && board[i + 1][j] === 'X') {
+		findShip(i + 1, j, board);
+	}
 
-// 	if (j + 1 < board[i].length && board[i][j + 1] === 'X') {
-// 		findShip(i, j + 1, board);
-// 	}
-// }
+	if (j + 1 < board[i].length && board[i][j + 1] === 'X') {
+		findShip(i, j + 1, board);
+	}
+}
 
-// var countBattleships = function(board) {
-// 	var count = 0;
+var countBattleships = function(board) {
+	var count = 0;
 
-// 	board = createGrid(board);
+	board = createGrid(board);
 
-//     for (var i = 0; i < board.length; i++) {
-//     	for (var j = 0; j < board[i].length; j++) {
-//     		if (board[i][j] === 'X') {
+    for (var i = 0; i < board.length; i++) {
+    	for (var j = 0; j < board[i].length; j++) {
+    		if (board[i][j] === 'X') {
+    			if (i - 1 >= 0 && board[i - 1][j] === 'X' || j - 1 >= 0 && board[i][j - 1] === 'X') {
+    				continue;
+    			} else {
+    				findShip(i, j, board);
+    				count++;
+    			}
+    		}
+    	}
+    }
 
-//     		}
-//     	}
-//     }
-
-//     return count;
-// };
+    return count;
+};
 
 
 // // Does not modify the board but creates an object to keep track of visited values.
